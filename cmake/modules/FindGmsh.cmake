@@ -11,18 +11,26 @@ find_path(Gmsh_INCLUDE_DIR
   NAMES
     gmsh.h
   PATHS
-    ${GMSH_DIR}
-    ${CMAKE_PREFIX_PATH}
+    #${GMSH_DIR}
+    #${CMAKE_PREFIX_PATH}
+	  #/home/danquigny/.local/lib/python2.7/site-packages/gmsh-4.7.1-Linux64-sdk/
+    /usr/include
+    /usr/include/gmsh
   PATH_SUFFIXES
     include)
 mark_as_advanced(Gmsh_INCLUDE_DIR)
 
 find_library(Gmsh_LIBRARY
   NAMES
-    gmsh libgmsh
+    #gmsh libgmsh
+    #libgmsh.so.3.0.6
+    libgmsh libgmsh.so.4.7.1
   PATHS
-    ${GMSH_DIR}
-    ${CMAKE_PREFIX_PATH}
+    #${GMSH_DIR}
+    #${CMAKE_PREFIX_PATH}
+    #/usr/bin
+    /home/danquigny/.local/lib/python2.7/site-packages/gmsh-4.7.1-Linux64-sdk/
+    /home/danquigny/.local/lib/python2.7/site-packages/gmsh-4.7.1-Linux64-sdk/lib/
   PATH_SUFFIXES
     lib lib64)
 mark_as_advanced(Gmsh_LIBRARY)

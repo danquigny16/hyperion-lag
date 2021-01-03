@@ -11,12 +11,13 @@
 /*---------------------------------------------------------------------------*/
 
 #include <yaml-cpp/yaml.h>
-#include <gmsh.h>
+#include <gmsh/gmsh.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkPoints.h>
-#include <vtkUnstructuredGrid.h>
-#include <vtkIdList.h>
+#include <vtk-7.1/vtkSmartPointer.h>
+#include <vtk-7.1/vtkPoints.h>
+#include <vtk-7.1/vtkUnstructuredGrid.h>
+#include <vtk-7.1/vtkIdList.h>
+#include <vtk-7.1/vtkCellType.h>
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
@@ -99,16 +100,23 @@ void HyperionMainDriver::load_mesh()
   // Create VTK points
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
+  auto points = vtkSmartPointer<vtkPoints>::New();
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   // Insert points from Gmsh node coordinates
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
+  for (size_t i = 0; i < nodes.size(); ++i) {
+    size_t node = nodes[i];
+    points->InsertPoint(node - 1, coords[i * 3 + 0], coords[i * 3 + 1], coords[i * 3 + 2]);
+  }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   // Create a VTK unstructured grid
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
+  m_mesh = vtkSmartPointer<vtkUnstructuredGrid>::New();
+  m_mesh->SetPoints(points);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   int nb_cells_to_allocate = 0;
@@ -122,6 +130,7 @@ void HyperionMainDriver::load_mesh()
   // Allocate cells
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
+  m_mesh->Allocate(nb_cells_to_allocate);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   // Get global cells and nodes
@@ -136,6 +145,8 @@ void HyperionMainDriver::load_mesh()
     // Insert connectivites, i.e. nodes connected to a cell
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Write code here
+    vtkIdType connect[4]={(vtkIdType)nodes[4*c],(vtkIdType)nodes[4*c+1],(vtkIdType)nodes[4*c+2],(vtkIdType)nodes[4*c+3]};
+    m_mesh->InsertNextCell(VTK_QUAD,4,connect);
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 

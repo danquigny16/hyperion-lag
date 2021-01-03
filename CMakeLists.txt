@@ -17,13 +17,13 @@ find_package(Gmsh)
 
 # Find VTK
 find_package(VTK COMPONENTS
-  CommonCore
-  CommonDataModel
-  FiltersGeneral
-  FiltersExtraction
-  FiltersGeometry
-  IOXML
-  IOLegacy
+  vtkCommonCore
+  vtkCommonDataModel
+  vtkFiltersGeneral
+  vtkFiltersExtraction
+  vtkFiltersGeometry
+  vtkIOXML
+  vtkIOLegacy
   REQUIRED)
 
 # Fetch yaml-cpp
