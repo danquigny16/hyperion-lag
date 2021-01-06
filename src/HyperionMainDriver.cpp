@@ -100,15 +100,14 @@ void HyperionMainDriver::load_mesh()
   // Create VTK points
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
-  auto points = vtkSmartPointer<vtkPoints>::New();
+  vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   // Insert points from Gmsh node coordinates
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   for (size_t i = 0; i < nodes.size(); ++i) {
-    size_t node = nodes[i];
-    points->InsertPoint(node - 1, coords[i * 3 + 0], coords[i * 3 + 1], coords[i * 3 + 2]);
+    points->InsertPoint(nodes[i] - 1, coords[i * 3 + 0], coords[i * 3 + 1], coords[i * 3 + 2]);
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -145,8 +144,11 @@ void HyperionMainDriver::load_mesh()
     // Insert connectivites, i.e. nodes connected to a cell
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Write code here
-    vtkIdType connect[4]={(vtkIdType)nodes[4*c],(vtkIdType)nodes[4*c+1],(vtkIdType)nodes[4*c+2],(vtkIdType)nodes[4*c+3]};
-    m_mesh->InsertNextCell(VTK_QUAD,4,connect);
+    vtkIdType connectivities[4] = {
+        (vtkIdType)nodes[4 * c],     (vtkIdType)nodes[4 * c + 1],
+        (vtkIdType)nodes[4 * c + 2], (vtkIdType)nodes[4 * c + 3]
+    };
+    m_mesh->InsertNextCell(VTK_QUAD, 4, connectivities);
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 

@@ -35,16 +35,16 @@ void add_cell_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // Create a VTK double array, insert values and attach it to the mesh
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
-  vtkSmartPointer<vtkDoubleArray> newField = vtkSmartPointer<vtkDoubleArray>::New();
-  newField->SetName(field_name.c_str());
-  newField->Allocate(field.size());
-  newField->SetNumberOfComponents(1);
+  vtkSmartPointer<vtkDoubleArray> array = vtkSmartPointer<vtkDoubleArray>::New();
+  array->SetName(field_name.c_str());
+  array->Allocate(field.size());
+  array->SetNumberOfComponents(1);
 
   for (size_t i = 0; i < field.size(); ++i) {
-    newField->InsertNextValue(field[i]);
+    array->InsertNextValue(field[i]);
   }
 
-  mesh->GetCellData()->AddArray(newField);
+  mesh->GetCellData()->AddArray(array);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
@@ -58,17 +58,16 @@ void add_node_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // Create a VTK double array, insert values and attach it to the mesh
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
-  vtkSmartPointer<vtkDoubleArray> newField = vtkSmartPointer<vtkDoubleArray>::New();
-  newField->SetName(field_name.c_str());
-  newField->Allocate(field.size());
-  newField->SetNumberOfComponents(1);
+  vtkSmartPointer<vtkDoubleArray> array = vtkSmartPointer<vtkDoubleArray>::New();
+  array->SetName(field_name.c_str());
+  array->Allocate(field.size());
+  array->SetNumberOfComponents(1);
 
   for (size_t i = 0; i < field.size(); ++i) {
-    newField->InsertNextValue(field[i]);
+    array->InsertNextValue(field[i]);
   }
 
-  mesh->GetPointData()->AddArray(newField);
-  // mesh->GetPointData()->SetActiveScalars(field_name.c_str());
+  mesh->GetPointData()->AddArray(array);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
@@ -125,7 +124,7 @@ void Hydro::init()
     // Get node n coordinates and save them to m_vars->m_node_coord
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // TODO : write code here
-    m_mesh->GetPoint(n,coord);
+    m_mesh->GetPoint(n, coord);
 
     std::pair<double,double> n_coord;
     n_coord.first = coord[0];
@@ -193,7 +192,7 @@ void Hydro::compute_volume()
       // Get node n coordinates
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       // TODO : write code here
-      m_mesh->GetPoint(cell->GetPointIds()->GetId(n),p);
+      m_mesh->GetPoint(cell->GetPointIds()->GetId(n), p);
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       coord[n] = std::make_pair(p[0], p[1]);
     }
@@ -408,11 +407,11 @@ void Hydro::dump(int step, double simulation_time)
   // Attach the simulation time to the mesh
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
-  vtkSmartPointer<vtkDoubleArray> fieldData = vtkSmartPointer<vtkDoubleArray>::New();
-  fieldData->SetNumberOfComponents(1);
-  fieldData->SetName("TimeValue");
-  fieldData->InsertNextValue(simulation_time);
-  m_mesh->GetFieldData()->AddArray(fieldData);
+  vtkSmartPointer<vtkDoubleArray> array = vtkSmartPointer<vtkDoubleArray>::New();
+  array->SetNumberOfComponents(1);
+  array->SetName("TimeValue");
+  array->InsertNextValue(simulation_time);
+  m_mesh->GetFieldData()->AddArray(array);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   add_cell_field(m_mesh, m_vars->m_pressure, "Pressure");

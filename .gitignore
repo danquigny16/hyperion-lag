@@ -206,5 +206,7 @@ flycheck_*.el
 # network security
 /network-security.data
 
+# vtu files
+/build/*.vtu
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,cmake,clion,emacs
