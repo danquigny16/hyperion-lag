@@ -12,11 +12,11 @@
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 
-#include <vtkCPDataDescription.h>
-#include <vtkCPInputDataDescription.h>
-#include <vtkCPProcessor.h>
-#include <vtkCPPythonScriptPipeline.h>
-#include <vtkUnstructuredGrid.h>
+#include <vtk-7.1/vtkCPDataDescription.h>
+#include <vtk-7.1/vtkCPInputDataDescription.h>
+#include <vtk-7.1/vtkCPProcessor.h>
+#include <vtk-7.1/vtkCPPythonScriptPipeline.h>
+#include <vtk-7.1/vtkUnstructuredGrid.h>
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
